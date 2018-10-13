@@ -8,7 +8,7 @@ students = [
     {
         'name': 'Abi',
         'region': 'Bali',
-        'subject': [
+        'subjects': [
             'SKD',
             'PCD',
             'ARSIKOMPAR'
@@ -17,7 +17,7 @@ students = [
     {
         'name': 'Tafwida',
         'region': 'Bandung',
-        'subject': [
+        'subjects': [
             'VLSI',
             'DSKC',
             'ARSIKOMPAR'
@@ -26,7 +26,7 @@ students = [
     {
         'name': 'Hanif',
         'region': 'Bogor',
-        'subject': [
+        'subjects': [
             'Robotik',
             'PCD',
             'DSKC'
@@ -49,6 +49,14 @@ def get_student_with_name(name):
     # get a student with spesific name using lambda expression
     student = list(filter(lambda x: x['name'].lower() == name.lower(), students))
     return jsonify(student[0])
+
+# /students/<string:name>/subjects - get all subjects of particular student
+@app.route('/students/<string:name>/subjects', methods=['GET'])
+def get_subjects_of_student_with_name(name):
+    # get a student with spesific name using lambda expression
+    student = list(filter(lambda x: x['name'].lower() == name.lower(), students))
+    subjects = student[0]['subjects']
+    return jsonify(subjects)
 
 # run the app at port 5000
 app.run(port=5000, debug=True)

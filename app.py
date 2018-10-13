@@ -58,5 +58,26 @@ def get_subjects_of_student_with_name(name):
     subjects = student[0]['subjects']
     return jsonify(subjects)
 
+# /students/create - create a new student
+#
+# Parameters:
+# string:name            = name of the new student
+# string:region          = region of where the new student come from
+# list<string>: subjects = list of subject the new student have taken
+@app.route('/students/create', methods=['POST'])
+def create_new_student():
+    # get the body data of the request
+    body_data = request.get_json()
+
+    # create a new student
+    new_student = {
+        'name': body_data['name'],
+        'region': body_data['region'],
+        'subjects': body_data['subjects']
+    }
+    students.append(new_student)
+
+    return jsonify(new_student)
+
 # run the app at port 5000
 app.run(port=5000, debug=True)

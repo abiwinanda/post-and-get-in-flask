@@ -108,7 +108,7 @@ Example response:
     ]
 }
 ```
-
+<br/>
 
 Return all subjects from specified a student (GET):
 ```
@@ -122,13 +122,13 @@ Example response:
     'ARSIKOMPAR'
 ]
 ```
-
+<br/>
 
 Create a new student (POST):
 ```
 /students/create
 ```
-
+<br/>
 
 Add subjects to a student (POST):
 ```

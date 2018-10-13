@@ -48,15 +48,31 @@ def return_all_students():
 def get_student_with_name(name):
     # get a student with spesific name using lambda expression
     student = list(filter(lambda x: x['name'].lower() == name.lower(), students))
-    return jsonify(student[0])
+
+    # check if student exist
+    if len(student) != 0:
+        return jsonify(student[0]), 200
+    else:
+        error_response = {
+            'error_message': 'student with name ' + name + ' does not exist'
+        }
+        return jsonify(error_response), 404
 
 # /students/<string:name>/subjects - get all subjects of particular student
 @app.route('/students/<string:name>/subjects', methods=['GET'])
 def get_subjects_of_student_with_name(name):
     # get a student with spesific name using lambda expression
     student = list(filter(lambda x: x['name'].lower() == name.lower(), students))
+
+    # check if student dose not exist
+    if len(student) == 0:
+        error_response = {
+            'error_message': 'student with name ' + name + ' does not exist'
+        }
+        return jsonify(error_response), 404
+
     subjects = student[0]['subjects']
-    return jsonify(subjects)
+    return jsonify(subjects), 200
 
 # /students/create - create a new student
 #
@@ -77,7 +93,7 @@ def create_new_student():
     }
     students.append(new_student)
 
-    return jsonify(new_student)
+    return jsonify(new_student), 201
 
 # run the app at port 5000
 app.run(port=5000, debug=True)

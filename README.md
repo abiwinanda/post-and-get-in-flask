@@ -90,7 +90,7 @@ Example response:
     }
 ]
 ```
-
+<br/>
 
 Return a student with specified name (GET):
 ```

@@ -95,5 +95,29 @@ def create_new_student():
 
     return jsonify(new_student), 201
 
+# /students/<string:name>/subjects - add new subjects to a student
+#
+# Parameters:
+# list<string>: subjects = list of new subject to add
+@app.route('/students/<string:name>/subjects', methods=['POST'])
+def add_subject_to_student_with_name(name):
+    # check if the specified student exist
+    student = list(filter(lambda x: x['name'].lower() == name.lower(), students))
+    if len(student) == 0:
+        error_message = {
+            'error_message': 'student with name ' + name + ' does not exist'
+        }
+        return jsonify(error_message), 404
+
+    # get the body data of the request
+    body_data = request.get_json()
+    new_subjects = body_data['subjects']
+
+    # add the new subject to the students
+    for new_subject in new_subjects:
+        student[0]['subjects'].append(new_subject)
+
+    return jsonify(student), 200
+
 # run the app at port 5000
 app.run(port=5000, debug=True)
